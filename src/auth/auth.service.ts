@@ -1,4 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
@@ -11,10 +12,17 @@ export class AuthService {
     @InjectRepository(User)
     private readonly user: Repository<User>,
     private readonly jwt: JwtService,
+    private readonly config: ConfigService,
   ) {}
 
   async generateAccessToken(user: User) {
-    return this.jwt.signAsync(user);
+    return await this.jwt.signAsync(
+      { ...user },
+      {
+        secret: this.config.get<string>('JWT_SECRET'),
+        expiresIn: '1d',
+      },
+    );
   }
 
   async validateUser(user: Pick<User, 'id' | 'password'>) {
@@ -30,7 +38,13 @@ export class AuthService {
   }
 
   async createUser(req: Omit<User, 'uuid'>) {
-    const user = this.user.create(req);
+    if (await this.user.findOneBy({ id: req.id }))
+      throw new HttpException('User already exists', 409);
+
+    const user = this.user.create({
+      ...req,
+      password: hashPassword(req.password),
+    });
     await this.user.insert(user);
     return user;
   }
