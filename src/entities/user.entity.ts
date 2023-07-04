@@ -9,10 +9,7 @@ export enum Role {
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  uuid: string;
-
-  @PrimaryColumn('text')
+  @PrimaryColumn()
   id: string;
 
   @Column('text')
@@ -21,41 +18,6 @@ export class User {
   @Column('text')
   password: string;
 
-  @Column('enum', { enum: Role })
-  @IsEnum(Role)
-  type: Role;
-
-  @Column('text', {
-    nullable: true,
-  })
-  @ValidateIf((o) => o.type === Role.AMBULANCE)
-  phone?: string;
-
-  @Column('text', {
-    nullable: true,
-  })
-  @ValidateIf((o) => o.type === Role.AMBULANCE)
-  @IsString()
-  patientStatus?: string;
-
-  @Column('double', {
-    nullable: true,
-  })
-  @ValidateIf((o) => o.type === Role.HOSPITAL)
-  @IsNumber()
-  latitude?: number;
-
-  @Column('double', {
-    nullable: true,
-  })
-  @ValidateIf((o) => o.type === Role.HOSPITAL)
-  @IsNumber()
-  longitude?: number;
-
-  @Column('integer', {
-    nullable: true,
-  })
-  @ValidateIf((o) => o.type === Role.HOSPITAL)
-  @IsNumber()
-  bed?: number;
+  @Column('boolean', { default: false })
+  isAdmin: boolean;
 }
