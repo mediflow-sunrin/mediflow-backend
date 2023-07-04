@@ -1,11 +1,5 @@
-import { IsEnum, IsNumber, IsString, ValidateIf } from 'class-validator';
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-
-export enum Role {
-  ADMIN,
-  AMBULANCE,
-  HOSPITAL,
-}
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Building } from './buliding.entity';
 
 @Entity()
 export class User {
@@ -20,4 +14,11 @@ export class User {
 
   @Column('boolean', { default: false })
   isAdmin: boolean;
+
+  @ManyToOne(() => Building, (building) => building.users, {
+    eager: true,
+    nullable: true,
+  })
+  @JoinColumn()
+  building: Building;
 }

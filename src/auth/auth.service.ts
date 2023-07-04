@@ -37,7 +37,7 @@ export class AuthService {
     return findUser;
   }
 
-  async createUser(req: Omit<User, 'uuid'>) {
+  async createUser(req: Omit<User, 'uuid' | 'building'>) {
     if (await this.user.findOneBy({ id: req.id }))
       throw new HttpException('User already exists', 409);
 
