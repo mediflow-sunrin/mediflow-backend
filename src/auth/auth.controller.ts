@@ -5,12 +5,14 @@ import { AccessGuard } from './guards/access.guard';
 import { Request } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DebugGuard } from './guards/debug.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get()
+  @ApiBearerAuth()
   @UseGuards(AccessGuard)
   async check(@Req() req: Request) {
     return req.user;
