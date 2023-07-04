@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsUUID } from 'class-validator';
+import { IsPhoneNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreateBuildingDto {
   @ApiProperty({
@@ -11,10 +11,18 @@ export class CreateBuildingDto {
   name: string;
 
   @ApiProperty({
-    description: 'Building contact',
+    description: 'Building address',
   })
   @IsString({
-    message: 'contact must be string',
+    message: 'address must be string',
+  })
+  address: string;
+
+  @ApiProperty({
+    description: 'Building contact',
+  })
+  @IsPhoneNumber('KR', {
+    message: 'contact must be phone number',
   })
   contact: string;
 

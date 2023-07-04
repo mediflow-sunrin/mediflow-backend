@@ -16,6 +16,9 @@ export class Building {
   name: string;
 
   @Column('text')
+  address: string;
+
+  @Column('text')
   contact: string;
 
   @Column('simple-array')
