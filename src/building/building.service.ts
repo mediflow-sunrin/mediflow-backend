@@ -18,6 +18,15 @@ export class BuildingService {
     });
   }
 
+  findOne(id: string) {
+    return this.buildingRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['users'],
+    });
+  }
+
   create(body: CreateBuildingDto) {
     const building = this.buildingRepository.create({
       ...body,

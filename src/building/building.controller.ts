@@ -13,6 +13,7 @@ import { BuildingService } from './building.service';
 import { AdminGuard } from 'src/auth/guards/admin.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateBuildingDto } from './dto/update-building.dto';
+import { AccessGuard } from 'src/auth/guards/access.guard';
 
 @Controller('building')
 export class BuildingController {
@@ -23,6 +24,13 @@ export class BuildingController {
   @UseGuards(AdminGuard)
   findAll() {
     return this.buildingService.findAll();
+  }
+
+  @Get('/:id')
+  @ApiBearerAuth()
+  @UseGuards(AccessGuard)
+  findOne(@Param('id') id: string) {
+    return this.buildingService.findOne(id);
   }
 
   @Post()
