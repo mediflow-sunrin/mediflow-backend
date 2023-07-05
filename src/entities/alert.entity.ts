@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Building } from './buliding.entity';
 
-enum AlertType {
+export enum AlertType {
   DANGER,
   INFO,
 }
