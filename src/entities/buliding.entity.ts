@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Alert } from './alert.entity';
 
 @Entity()
 export class Building {
@@ -29,4 +30,11 @@ export class Building {
   })
   @JoinColumn()
   users: User[];
+
+  @OneToMany(() => Alert, (alert) => alert.building, {
+    eager: true,
+    nullable: true,
+  })
+  @JoinColumn()
+  alerts: Alert[];
 }

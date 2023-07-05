@@ -3,6 +3,8 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database.module';
 import { BuildingModule } from './building/building.module';
+import { UserModule } from './user/user.module';
+import { AlertGateway } from './alert/alert.gateway';
 
 @Module({
   imports: [
@@ -13,8 +15,9 @@ import { BuildingModule } from './building/building.module';
     AuthModule,
     DatabaseModule,
     BuildingModule,
+    UserModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [AlertGateway],
 })
 export class AppModule {}
