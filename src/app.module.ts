@@ -5,6 +5,7 @@ import { DatabaseModule } from './database.module';
 import { BuildingModule } from './building/building.module';
 import { UserModule } from './user/user.module';
 import { AlertGateway } from './alert/alert.gateway';
+import { AlertModule } from './alert/alert.module';
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { AlertGateway } from './alert/alert.gateway';
     DatabaseModule,
     BuildingModule,
     UserModule,
+    AlertModule,
   ],
   controllers: [],
-  providers: [AlertGateway],
+  providers: [],
 })
 export class AppModule {}

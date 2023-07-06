@@ -5,24 +5,19 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'http';
-import { AlertType } from 'src/entities/alert.entity';
-
-interface RequestAlert {
-  type: AlertType;
-  title: string;
-  message: string;
-  buildingId: string;
-}
+import { AlertService } from './alert.service';
+import { CreateAlertDto } from './dto/create-alert.dto';
 
 @WebSocketGateway(12000)
 export class AlertGateway {
+  constructor(private readonly alertSerivce: AlertService) {}
+
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('alert')
-  handleAlert(
-    @MessageBody() data: RequestAlert,
-  ): Omit<RequestAlert, 'buildingId'> {
+  @SubscribeMessage('createAlert')
+  handleAlert(@MessageBody() data: CreateAlertDto) {
+    this.alertSerivce.create(data);
     this.server.emit('alert', data);
     return data;
   }
