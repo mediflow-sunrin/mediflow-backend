@@ -16,6 +16,7 @@ export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
   }
 
   async validate(req: Request, user: Express.User) {
+    console.log(req.user);
     if (!req.user.isAdmin)
       throw new HttpException(
         "You don't have permission to access this route",
