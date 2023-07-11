@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { AdminStrategy } from './strategies/admin.strategy';
+import { UserService } from 'src/user/user.service';
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { AdminStrategy } from './strategies/admin.strategy';
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AccessStrategy, AdminStrategy],
+  providers: [AuthService, AccessStrategy, AdminStrategy, UserService],
 })
 export class AuthModule {}
