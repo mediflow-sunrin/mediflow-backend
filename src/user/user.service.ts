@@ -22,9 +22,12 @@ export class UserService {
   update(user: User, body: UpdateUserDto) {
     return this.userRepository.update(user.id, {
       name: body.name,
-      building: {
-        id: body.buildingId,
-      },
+      building:
+        body.buildingId === null
+          ? null
+          : {
+              id: body.buildingId,
+            },
     });
   }
 }
