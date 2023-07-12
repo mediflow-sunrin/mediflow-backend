@@ -26,6 +26,15 @@ export class AlertService {
   }
 
   create(alert: CreateAlertDto) {
-    return this.alertRepository.save(alert);
+    return this.alertRepository.save({
+      ...alert,
+      building: {
+        id: alert.buildingId,
+      },
+    });
+  }
+
+  deleteAll() {
+    return this.alertRepository.delete({});
   }
 }

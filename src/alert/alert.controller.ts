@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Delete, Get, Query } from '@nestjs/common';
 import { AlertService } from './alert.service';
 import { ApiProperty, ApiQuery } from '@nestjs/swagger';
 
@@ -18,5 +18,10 @@ export class AlertController {
   })
   findAll(@Query('id') id?: string) {
     return this.alertService.findAll(id);
+  }
+
+  @Delete()
+  deleteAll() {
+    return this.alertService.deleteAll();
   }
 }
