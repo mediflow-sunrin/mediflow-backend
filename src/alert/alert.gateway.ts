@@ -8,7 +8,12 @@ import { Server } from 'http';
 import { AlertService } from './alert.service';
 import { CreateAlertDto } from './dto/create-alert.dto';
 
-@WebSocketGateway(12000)
+@WebSocketGateway({
+  transports: ['websocket', 'polling'],
+  cors: {
+    origin: '*',
+  },
+})
 export class AlertGateway {
   constructor(private readonly alertSerivce: AlertService) {}
 
@@ -17,7 +22,12 @@ export class AlertGateway {
 
   @SubscribeMessage('createAlert')
   handleAlert(@MessageBody() data: CreateAlertDto) {
-    this.alertSerivce.create(data);
+    this.alertSerivce.create(data).then((res) =>
+      this.server.emit('alert-web', {
+        ...res,
+        buildingId: res.building.id,
+      }),
+    );
     this.server.emit('alert', data);
     return data;
   }

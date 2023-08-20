@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Building } from './buliding.entity';
 
 export enum AlertType {
@@ -6,7 +12,11 @@ export enum AlertType {
   INFO,
 }
 
-@Entity()
+@Entity({
+  orderBy: {
+    createdAt: 'DESC',
+  },
+})
 export class Alert {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -22,4 +32,7 @@ export class Alert {
 
   @ManyToOne(() => Building, (building) => building.alerts)
   building: Building;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
