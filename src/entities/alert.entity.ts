@@ -30,7 +30,9 @@ export class Alert {
   @Column('text')
   message: string;
 
-  @ManyToOne(() => Building, (building) => building.alerts)
+  @ManyToOne(() => Building, (building) => building.alerts, {
+    onDelete: 'CASCADE',
+  })
   building: Building;
 
   @CreateDateColumn()

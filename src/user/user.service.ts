@@ -30,4 +30,16 @@ export class UserService {
             },
     });
   }
+
+  updateById(id: string, body: UpdateUserDto) {
+    return this.userRepository.update(id, {
+      name: body.name,
+      building:
+        body.buildingId === null
+          ? null
+          : {
+              id: body.buildingId,
+            },
+    });
+  }
 }
